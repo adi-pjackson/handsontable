@@ -1,12 +1,12 @@
 /*!
- * Handsontable 0.12.4
+ * Handsontable 0.12.4-kc
  * Handsontable is a JavaScript library for editable tables with basic copy-paste compatibility with Excel and Google Docs
  *
  * Copyright 2012-2014 Marcin Warpechowski
  * Licensed under the MIT license.
  * http://handsontable.com/
  *
- * Date: Fri Jan 23 2015 10:07:24 GMT+0100 (CET)
+ * Date: Tue Feb 03 2015 14:58:25 GMT+1300 (NZDT)
  */
 /*jslint white: true, browser: true, plusplus: true, indent: 4, maxerr: 50 */
 
@@ -2385,7 +2385,7 @@ Handsontable.Core = function (rootElement, userSettings) {
   /**
    * Handsontable version
    */
-  this.version = '0.12.4'; //inserted by grunt from package.json
+  this.version = '0.12.4-kc'; //inserted by grunt from package.json
 };
 
 var DefaultSettings = function () {};
@@ -7969,7 +7969,8 @@ CopyPasteClass.prototype.onKeyDown = function (event) {
   if (isCtrlDown) {
     // this is needed by fragmentSelection in Handsontable. Ignore copypaste.js behavior if fragment of cell text is selected
     if (document.activeElement !== this.elTextarea && (this.getSelectionText() !== '' ||
-        ['INPUT', 'SELECT', 'TEXTAREA'].indexOf(document.activeElement.nodeName) !== -1)) {
+        ['INPUT', 'SELECT', 'TEXTAREA'].indexOf(document.activeElement.nodeName) !== -1 ||
+        document.activeElement.isContentEditable)) {
       return;
     }
 
