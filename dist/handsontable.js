@@ -6,7 +6,7 @@
  * Licensed under the MIT license.
  * http://handsontable.com/
  *
- * Date: Tue Mar 17 2015 15:27:51 GMT+1300 (NZDT)
+ * Date: Tue Mar 17 2015 15:57:17 GMT+1300 (NZDT)
  */
 /*jslint white: true, browser: true, plusplus: true, indent: 4, maxerr: 50 */
 
@@ -16181,9 +16181,6 @@ Handsontable.plugins.Grouping = Grouping;
     });
 
     this.eventManager.addEventListener(this.instance.rootElement,'touchmove', function (event) {
-      var scrollTop = Handsontable.Dom.getWindowScrollTop()
-        , scrollLeft = Handsontable.Dom.getWindowScrollLeft();
-
       if (that.dragged.length > 0) {
         var endTarget = document.elementFromPoint(
           event.touches[0].clientX,
