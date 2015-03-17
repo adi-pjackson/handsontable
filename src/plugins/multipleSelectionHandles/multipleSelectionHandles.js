@@ -229,9 +229,6 @@
     });
 
     this.eventManager.addEventListener(this.instance.rootElement,'touchmove', function (event) {
-      var scrollTop = Handsontable.Dom.getWindowScrollTop()
-        , scrollLeft = Handsontable.Dom.getWindowScrollLeft();
-
       if (that.dragged.length > 0) {
         var endTarget = document.elementFromPoint(
           event.touches[0].clientX,
