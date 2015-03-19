@@ -271,7 +271,14 @@ Handsontable.TableView = function (instance) {
           /*if (that.settings.fragmentSelection === 'single') {
            clearTextSelection(); //otherwise text selection blinks during multiple cells selection
            }*/
-          instance.selection.setRangeEnd(coords);
+          // rua 04-02-2015
+          // setRangeEnd defaults to scrolling to show the active cell (selection start, blue highlight).
+          // When dragging a selection wider than viewport, this caused the scroll to jump back when user 
+          // mouses up. 
+          // Turning off scrollToCell here prevents this undesirable scroll jump and doesn't appear to cause 
+          // other issues.
+          var scrollToCell = false;
+          instance.selection.setRangeEnd(coords, scrollToCell);
         }
       } else {
         if (isMouseDown) {
