@@ -1,12 +1,12 @@
 /*!
- * Handsontable 0.12.4
+ * Handsontable 0.12.4-kc3
  * Handsontable is a JavaScript library for editable tables with basic copy-paste compatibility with Excel and Google Docs
  *
  * Copyright 2012-2014 Marcin Warpechowski
  * Licensed under the MIT license.
  * http://handsontable.com/
  *
- * Date: Fri Jan 23 2015 10:07:24 GMT+0100 (CET)
+ * Date: Fri Mar 20 2015 10:49:00 GMT+1300 (NZDT)
  */
 /*jslint white: true, browser: true, plusplus: true, indent: 4, maxerr: 50 */
 
@@ -2385,7 +2385,7 @@ Handsontable.Core = function (rootElement, userSettings) {
   /**
    * Handsontable version
    */
-  this.version = '0.12.4'; //inserted by grunt from package.json
+  this.version = '0.12.4-kc3'; //inserted by grunt from package.json
 };
 
 var DefaultSettings = function () {};
@@ -3578,7 +3578,14 @@ Handsontable.TableView = function (instance) {
           /*if (that.settings.fragmentSelection === 'single') {
            clearTextSelection(); //otherwise text selection blinks during multiple cells selection
            }*/
-          instance.selection.setRangeEnd(coords);
+          // rua 04-02-2015
+          // setRangeEnd defaults to scrolling to show the active cell (selection start, blue highlight).
+          // When dragging a selection wider than viewport, this caused the scroll to jump back when user 
+          // mouses up. 
+          // Turning off scrollToCell here prevents this undesirable scroll jump and doesn't appear to cause 
+          // other issues.
+          var scrollToCell = false;
+          instance.selection.setRangeEnd(coords, scrollToCell);
         }
       } else {
         if (isMouseDown) {
@@ -7969,7 +7976,8 @@ CopyPasteClass.prototype.onKeyDown = function (event) {
   if (isCtrlDown) {
     // this is needed by fragmentSelection in Handsontable. Ignore copypaste.js behavior if fragment of cell text is selected
     if (document.activeElement !== this.elTextarea && (this.getSelectionText() !== '' ||
-        ['INPUT', 'SELECT', 'TEXTAREA'].indexOf(document.activeElement.nodeName) !== -1)) {
+        ['INPUT', 'SELECT', 'TEXTAREA'].indexOf(document.activeElement.nodeName) !== -1 ||
+        document.activeElement.isContentEditable)) {
       return;
     }
 
@@ -16180,13 +16188,10 @@ Handsontable.plugins.Grouping = Grouping;
     });
 
     this.eventManager.addEventListener(this.instance.rootElement,'touchmove', function (event) {
-      var scrollTop = Handsontable.Dom.getWindowScrollTop()
-        , scrollLeft = Handsontable.Dom.getWindowScrollLeft();
-
       if (that.dragged.length > 0) {
         var endTarget = document.elementFromPoint(
-          event.touches[0].screenX - scrollLeft,
-          event.touches[0].screenY - scrollTop
+          event.touches[0].clientX,
+          event.touches[0].clientY
         );
 
         if(!endTarget) {
@@ -16219,6 +16224,7 @@ Handsontable.plugins.Grouping = Grouping;
         }
 
         event.preventDefault();
+        Handsontable.helper.stopPropagation(event);
       }
     });
 
