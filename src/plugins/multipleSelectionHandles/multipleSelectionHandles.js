@@ -252,7 +252,7 @@
             , rangeDirection = selectedRange.getDirection();
 
           if (rangeWidth == 1 && rangeHeight == 1) {
-            that.instance.selection.setRangeEnd(targetCoords);
+            that.instance.selection.setRangeEnd(targetCoords, false);
           }
 
           var newRangeCoords = that.getCurrentRangeCoords(selectedRange, targetCoords, that.touchStartRange.direction, rangeDirection, that.dragged[0]);
@@ -260,12 +260,11 @@
           if(newRangeCoords.start != null) {
             that.instance.selection.setRangeStart(newRangeCoords.start);
           }
-          that.instance.selection.setRangeEnd(newRangeCoords.end);
+          that.instance.selection.setRangeEnd(newRangeCoords.end, false);
 
         }
 
         event.preventDefault();
-        Handsontable.helper.stopPropagation(event);
       }
     });
 

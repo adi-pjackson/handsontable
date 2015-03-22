@@ -1,12 +1,12 @@
 /*!
- * Handsontable 0.12.4-kc3
+ * Handsontable 0.12.4-kc4
  * Handsontable is a JavaScript library for editable tables with basic copy-paste compatibility with Excel and Google Docs
  *
  * Copyright 2012-2014 Marcin Warpechowski
  * Licensed under the MIT license.
  * http://handsontable.com/
  *
- * Date: Fri Mar 20 2015 10:49:00 GMT+1300 (NZDT)
+ * Date: Mon Mar 23 2015 11:57:30 GMT+1300 (NZDT)
  */
 /*jslint white: true, browser: true, plusplus: true, indent: 4, maxerr: 50 */
 
@@ -2385,7 +2385,7 @@ Handsontable.Core = function (rootElement, userSettings) {
   /**
    * Handsontable version
    */
-  this.version = '0.12.4-kc3'; //inserted by grunt from package.json
+  this.version = '0.12.4-kc4'; //inserted by grunt from package.json
 };
 
 var DefaultSettings = function () {};
@@ -16211,7 +16211,7 @@ Handsontable.plugins.Grouping = Grouping;
             , rangeDirection = selectedRange.getDirection();
 
           if (rangeWidth == 1 && rangeHeight == 1) {
-            that.instance.selection.setRangeEnd(targetCoords);
+            that.instance.selection.setRangeEnd(targetCoords, false);
           }
 
           var newRangeCoords = that.getCurrentRangeCoords(selectedRange, targetCoords, that.touchStartRange.direction, rangeDirection, that.dragged[0]);
@@ -16219,12 +16219,11 @@ Handsontable.plugins.Grouping = Grouping;
           if(newRangeCoords.start != null) {
             that.instance.selection.setRangeStart(newRangeCoords.start);
           }
-          that.instance.selection.setRangeEnd(newRangeCoords.end);
+          that.instance.selection.setRangeEnd(newRangeCoords.end, false);
 
         }
 
         event.preventDefault();
-        Handsontable.helper.stopPropagation(event);
       }
     });
 
