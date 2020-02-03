@@ -1,3 +1,5 @@
+# DEPRECATED AND MAY BE DELETED AFTER FEBRUARY 2020
+
 # Handsontable [![Build Status](https://travis-ci.org/handsontable/handsontable.png?branch=master)](https://travis-ci.org/handsontable/handsontable)
 
 Handsontable is a minimalist approach to Excel-like table editor (datagrid/data grid) in HTML & JavaScript. 
